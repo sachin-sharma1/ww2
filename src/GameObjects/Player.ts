@@ -1,15 +1,17 @@
 
 const MAX_VELOCITY=15;
-const VELOCITY_X=5;
-const VELOCITY_Y=7;
-
-export default class Player extends Phaser.Physics.Arcade.Sprite
+const FORCE_X=5;
+const FORCE_Y=7;
+import {Scene} from 'phaser'
+export default class Player extends Phaser.Physics.Matter.Sprite
 {
-    scene:Phaser.Scene;
+    world:Phaser.Physics.Matter.World;
+    scene:Scene;
     cursors:Phaser.Types.Input.Keyboard.CursorKeys;
-    constructor(scene:Phaser.Scene,x:number,y:number,texture:string)
+    constructor(world:Phaser.Physics.Matter.World,scene:Scene,x:number,y:number,texture:string)
     {
-        super(scene,x,y,texture);
+        super(world,x,y,texture);
+        this.world=world;
         this.scene=scene;
         this.init();
        
@@ -26,7 +28,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
     setupPhysics()
     {
         this.scene.physics.world.enable(this);
-        this.setMaxVelocity(MAX_VELOCITY);
        
     }
     update(t:number,dt:number)
@@ -36,32 +37,32 @@ export default class Player extends Phaser.Physics.Arcade.Sprite
     handleMovement()
     {
 
-        const velocityY=this.getVelocityY();
-        const velocityX=this.getVelocityX();
+        const velocityY=this.getForceYToApply();
+        const velocityX=this.getForceXToApply();
         this
     }
-    getVelocityY()
+    getForceYToApply()
     {
         if(this.cursors.down.isDown && !this.cursors.up.isUp)
         {
-            return VELOCITY_Y*-1;
+            return FORCE_Y*-1;
         }
         if(!this.cursors.down.isDown && this.cursors.up.isUp)
         {
-            return VELOCITY_Y; 
+            return FORCE_Y; 
         }
         return 0;
 
     }
-    getVelocityX()
+    getForceXToApply()
     {
         if(this.cursors.left.isDown && !this.cursors.right.isUp)
         {
-            return VELOCITY_X*-1;
+            return FORCE_X*-1;
         }
         if(!this.cursors.left.isDown && this.cursors.right.isUp)
         {
-            return VELOCITY_X; 
+            return FORCE_X; 
         }
         return 0;
 
