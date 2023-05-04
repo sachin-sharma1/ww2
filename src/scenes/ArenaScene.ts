@@ -41,4 +41,7 @@ export default class ArenaScene extends Phaser.Scene
         this.children.add(this.player);
        
     }
+    update(time: number, delta: number): void {
+        this.player.update(time,delta);
+    }
 }
