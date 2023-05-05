@@ -19,10 +19,14 @@ export default class ArenaScene extends Phaser.Scene
     }
     create()
     {
-        
+        this.setupPhysics();
         this.setUpBackground();
         this.setupPlayer();
         
+    }
+    setupPhysics()
+    {
+        this.matter.world.setGravity(0,0);
     }
     setUpBackground()
     {
