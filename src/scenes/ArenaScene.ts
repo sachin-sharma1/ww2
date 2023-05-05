@@ -1,26 +1,32 @@
 import Phaser, { GameObjects } from 'phaser'
 import paths from '../paths';
+import constants from '../constants';
+import Player from '../GameObjects/Player';
 
 export default class ArenaScene extends Phaser.Scene
 {
    
     background:GameObjects.Image;
-    player: Phaser.Physics.Arcade.Sprite;
+    player: Player
     constructor()
     {
         super("arena");
     }
     preload()
     {
-       this.load.image("background",paths.backgrounds.gameScreen);
-       this.load.image("player",paths.player.ships.default);
+       this.load.image(constants.GAME_OBJECTS.BACKGROUNDS.DEFAULT,paths.backgrounds.gameScreen);
+       this.load.image(constants.GAME_OBJECTS.PLAYER.SHIPS.DEFAULT,paths.player.ships.default);
     }
     create()
     {
-        
+        this.setupPhysics();
         this.setUpBackground();
         this.setupPlayer();
         
+    }
+    setupPhysics()
+    {
+        this.matter.world.setGravity(0,0);
     }
     setUpBackground()
     {
@@ -35,6 +41,11 @@ export default class ArenaScene extends Phaser.Scene
     }
     addPlayerToScene()
     {
-        this.player = this.physics.add.sprite(400,300,"player")
+        this.player = new Player(this,400,300,constants.GAME_OBJECTS.PLAYER.SHIPS.DEFAULT);
+        this.children.add(this.player);
+       
+    }
+    update(time: number, delta: number): void {
+        this.player.update(time,delta);
     }
 }
