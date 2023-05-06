@@ -1,4 +1,4 @@
-import Phaser, { GameObjects } from 'phaser'
+import Phaser, { GameObjects,Geom } from 'phaser'
 import paths from '../paths';
 import constants from '../constants';
 import Player from '../GameObjects/Player';
@@ -31,7 +31,8 @@ export default class ArenaScene extends Phaser.Scene
     }
     setUpBackground()
     {
-        this.background =this.add.image(400,300,"background")
+        const center = this.getScreenCenter();
+        this.background =this.add.image(center.x,center.y,"background")
         const xScale= this.scale.width/this.background.width;
         const yScale= this.scale.height/this.background.height;
         this.background.setScale(xScale,yScale)
@@ -42,11 +43,16 @@ export default class ArenaScene extends Phaser.Scene
     }
     addPlayerToScene()
     {
-        this.player = new Player(this,400,300,constants.GAME_OBJECTS.PLAYER.SHIPS.DEFAULT);
+        const center = this.getScreenCenter();
+        this.player = new Player(this,center.x,center.y,constants.GAME_OBJECTS.PLAYER.SHIPS.DEFAULT);
         this.children.add(this.player);
        
     }
     update(time: number, delta: number): void {
         this.player.update(time,delta);
+    }
+    getScreenCenter():Geom.Point
+    {
+        return  new Geom.Point(this.scale.width/2,this.scale.height/2);
     }
 }
