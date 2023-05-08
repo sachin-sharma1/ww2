@@ -7,6 +7,11 @@ const paths={
         ships:{
             default:"assets/playerShip.png"
         }
+    },
+    projectiles:{
+       laser:{
+        green:"assets/laserGreen.png"
+       }
     }
 };
 

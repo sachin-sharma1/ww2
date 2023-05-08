@@ -1,4 +1,4 @@
-import Phaser, { GameObjects,Geom } from 'phaser'
+import Phaser, { Geom,GameObjects } from 'phaser'
 import paths from '../paths';
 import constants from '../constants';
 import Player from '../GameObjects/Player';
@@ -6,6 +6,8 @@ import Player from '../GameObjects/Player';
 export default class ArenaScene extends Phaser.Scene
 {
    
+    //TODO: add separate layer to game objects
+    gameObjectsLayer:Phaser.GameObjects.Layer;
     background:GameObjects.Image;
     player: Player
     constructor()
@@ -21,13 +23,11 @@ export default class ArenaScene extends Phaser.Scene
     {
         this.setUpBackground();
         this.setupPhysics();
-        this.setupPlayer();
-        
+        this.setupGameLayer();        
     }
     setupPhysics()
     {
         this.matter.world.setGravity(0,0);
-        
     }
     setUpBackground()
     {
@@ -36,6 +36,14 @@ export default class ArenaScene extends Phaser.Scene
         const xScale= this.scale.width/this.background.width;
         const yScale= this.scale.height/this.background.height;
         this.background.setScale(xScale,yScale)
+        this.background.setDepth(constants.GAME_LOGIC.DEPTHS.BACKGROUND)
+    }
+    setupGameLayer()
+    {
+        this.gameObjectsLayer = this.add.layer();
+        this.gameObjectsLayer.setDepth(constants.GAME_LOGIC.DEPTHS.GAME_OBJECTS);
+        this.setupPlayer();
+        this.gameObjectsLayer.add(this.player);
     }
     setupPlayer()
     {

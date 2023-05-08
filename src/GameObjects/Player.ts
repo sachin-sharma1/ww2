@@ -1,11 +1,13 @@
 
 const MAX_VELOCITY=8;
-const MIN_MAX_VELOCITY_TIME=3*1000;
+
 import {Scene} from 'phaser'
+import Bullet from './Bullet';
+import constants from '../constants';
 export default class Player extends Phaser.Physics.Matter.Sprite
 {
     world:Phaser.Physics.Matter.World;
-   
+    projectileGroup:Phaser.GameObjects.Group;
     cursors:Phaser.Types.Input.Keyboard.CursorKeys;
     constructor(scene:Scene,x:number,y:number,texture:string)
     {
@@ -19,7 +21,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite
     {
         this.addKeyBoardEvents();
         this.setupPhysics();
+        this.setupProjectilesGroup();
        
+    }
+    setupProjectilesGroup()
+    {
+        this.projectileGroup = new Phaser.GameObjects.Group(this.scene);
+        this.projectileGroup.maxSize=constants.GAME_LOGIC.PROJECTILE.MAX_COUNT;
+
     }
     setupPhysics()
     {
@@ -36,6 +45,24 @@ export default class Player extends Phaser.Physics.Matter.Sprite
         this.updateVelocity(dt);
         this.horizontalWrap();
         this.verticalWrap();
+       this.instantiateProjectile(t,dt)
+       this.updateOrDestroyChildProjectiles(t,dt)
+    }
+    updateOrDestroyChildProjectiles(t:number,dt:number)
+    {
+        if(this.projectileGroup.children.getArray().length==0)return;
+         
+        this.projectileGroup.children.getArray().forEach((element) => {
+            element.update(t,dt);
+        });
+    }
+    instantiateProjectile(t:number,dt:number)
+    {
+        if(!this.cursors.space.isDown || this.projectileGroup.isFull())return;
+        const bullet:Bullet=new Bullet(this.scene,this.x,this.y- this.displayHeight)
+        bullet.init()
+        this.projectileGroup.add(bullet);
+        
     }
     horizontalWrap()
     {
@@ -53,11 +80,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite
     {
         const halfHeight=this.displayHeight *0.5;
         const sceneHeight = this.scene.scale.height;
-
+        
         if(this.y < -halfHeight)
         {
-            this.y = sceneHeight + halfHeight;
-        }else if(this.x > sceneHeight + halfHeight)
+            this.y = sceneHeight - halfHeight;
+        }else if(this.y > sceneHeight + halfHeight)
         {
             this.y=-halfHeight
         }

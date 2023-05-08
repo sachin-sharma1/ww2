@@ -7,6 +7,17 @@ const constants={
             }
         }
     },
+    GAME_LOGIC:{
+        PROJECTILE:{
+            SPEED:-12,
+            MAX_COUNT:15,
+            MIN_TIME_GAP:200
+        },
+        DEPTHS:{
+            BACKGROUND:100,
+            GAME_OBJECTS:200,
+        }
+    },
     GAME_OBJECTS:{
         BACKGROUNDS:{
             DEFAULT:"background"
