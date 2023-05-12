@@ -2,7 +2,6 @@
 const MAX_VELOCITY=8;
 
 import {Scene} from 'phaser'
-import Bullet from './Bullet';
 import constants from '../constants';
 import BulletFactory from './BulletFactory';
 export default class Player extends Phaser.Physics.Matter.Sprite
