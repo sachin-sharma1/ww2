@@ -11,7 +11,7 @@ const constants={
         PROJECTILE:{
             SPEED:-12,
             MAX_COUNT:15,
-            MIN_TIME_GAP:200
+            MIN_TIME_GAP:80
         },
         DEPTHS:{
             BACKGROUND:100,

@@ -4,16 +4,18 @@ const MAX_VELOCITY=8;
 import {Scene} from 'phaser'
 import Bullet from './Bullet';
 import constants from '../constants';
+import BulletFactory from './BulletFactory';
 export default class Player extends Phaser.Physics.Matter.Sprite
 {
     world:Phaser.Physics.Matter.World;
     projectileGroup:Phaser.GameObjects.Group;
     cursors:Phaser.Types.Input.Keyboard.CursorKeys;
+    bFactory:BulletFactory
     constructor(scene:Scene,x:number,y:number,texture:string)
     {
         super(scene.matter.world,x,y,texture);
         this.world=scene.matter.world;
-        
+        this.bFactory = new BulletFactory(this);
         this.init();
        
     }
@@ -58,8 +60,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite
     }
     instantiateProjectile(t:number,dt:number)
     {
+        //our internal logic
         if(!this.cursors.space.isDown || this.projectileGroup.isFull())return;
-        const bullet:Bullet=new Bullet(this.scene,this.x,this.y- this.displayHeight)
+        const bullet=this.bFactory.add(t)
+        if(bullet==null)return;
         bullet.init()
         this.projectileGroup.add(bullet);
         
