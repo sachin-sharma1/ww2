@@ -8,6 +8,9 @@ const paths={
             default:"assets/playerShip.png"
         }
     },
+    miscellaneous:{
+        companyLogo:"assets/companyLogo.png"
+    },
     projectiles:{
        laser:{
         green:"assets/laserGreen.png"

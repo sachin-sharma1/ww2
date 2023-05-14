@@ -13,15 +13,24 @@ const constants={
             MAX_COUNT:15,
             MIN_TIME_GAP:80
         },
+        ENEMY:{
+            PER_LEVEL_TIME_GAP:[2.7,2.3,2.0,1.5,1],
+            PER_LEVEL_COUNT:[2,3,4,5,5]
+        },
         DEPTHS:{
             BACKGROUND:100,
             GAME_OBJECTS:200,
         }
     },
+    SCENES:{
+        LOADING_SCENE:"loading",
+        ARENA_SCENE:"arena"
+    },
     GAME_OBJECTS:{
         BACKGROUNDS:{
             DEFAULT:"background"
         },
+        LOGO:"companyLogo",
         PLAYER:{
             SHIPS:{
                 DEFAULT:"player"

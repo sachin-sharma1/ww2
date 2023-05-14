@@ -2,6 +2,7 @@ import Phaser from 'phaser'
 import constants from './constants'
 
 import ArenaScene from './scenes/ArenaScene'
+import LoadingScene from './scenes/LoadingScene'
 const {WIDTH:width,HEIGHT:height}=constants.DISPLAY.RESOLUTION.FULL_HD;
 
 const config: Phaser.Types.Core.GameConfig = {
@@ -16,7 +17,7 @@ const config: Phaser.Types.Core.GameConfig = {
 			debug:true
 		},
 	},
-	scene: [ArenaScene],
+	scene: [LoadingScene,ArenaScene],
 }
 
 export default new Phaser.Game(config)
