@@ -18,6 +18,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite
         this.init();
        
     }
+    
     init()
     {
         this.addKeyBoardEvents();
@@ -25,6 +26,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite
         this.setupProjectilesGroup();
        
     }
+
     setupProjectilesGroup()
     {
         this.projectileGroup = new Phaser.GameObjects.Group(this.scene);
@@ -36,6 +38,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite
         //make sure that it doesn't rotate when forces are applied on it
         this.setFixedRotation();
     }
+
     addKeyBoardEvents()
     {
         this.cursors=this.scene.input.keyboard.createCursorKeys();
@@ -49,6 +52,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite
        this.instantiateProjectile(t,dt)
        this.updateOrDestroyChildProjectiles(t,dt)
     }
+
     updateOrDestroyChildProjectiles(t:number,dt:number)
     {
         if(this.projectileGroup.children.getArray().length==0)return;
@@ -57,6 +61,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite
             element.update(t,dt);
         });
     }
+
     instantiateProjectile(t:number,dt:number)
     {
         //our internal logic
@@ -67,6 +72,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite
         this.projectileGroup.add(bullet);
         
     }
+
     horizontalWrap()
     {
         const halfWidth= this.displayWidth*0.5;
@@ -79,6 +85,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite
             this.x=-halfWidth;
         }
     }
+
     verticalWrap()
     {
         const halfHeight=this.displayHeight *0.5;
@@ -92,6 +99,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite
             this.y=-halfHeight
         }
     }
+
     updateVelocity(dt:number)
     {
         
@@ -105,14 +113,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite
         if(this.cursors.down.isDown && !this.cursors.up.isDown) return 1;
         return 0;
     }
+
     getXAxisDirectionVector():number
     {
         if(this.cursors.right.isDown && !this.cursors.left.isDown) return 1;
        
         if(this.cursors.left.isDown && !this.cursors.right.isDown) return -1;
         return 0;
-    }
-
-    
-   
+    }   
 }

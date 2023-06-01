@@ -36,6 +36,9 @@ export default class LoadingScene extends Phaser.Scene
             this.isLoadingComplete=true;
 
         });
+        this.load.on('filecomplete',(key:string)=>{
+           this.loadingText=`loaded...${key}`
+         });
         this.loadEnemies();
     }
     loadEnemies()
@@ -54,30 +57,24 @@ export default class LoadingScene extends Phaser.Scene
     }
     create()
     {
-        // this.lblText = this.add.bitmapText(400, 300, 'atari', '', 38)
-        //     .setInteractive()
-        //     .setOrigin(0.5)
-        //     .setCenterAlign();
-        // this.lblText=this.add.text(0, 0, 'Hello World', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
-
-        // this.lblText.setText([
-        //     'Phaser 3',
-        //     'BitmapText',
-        //     'Click to change Font'
-        // ]);
-       
         this.logoSprite=this.add.sprite(this.getCenter(),100+250,constants.GAME_OBJECTS.LOGO);
         this.updateTextLabel=this.add.text(this.getCenter(),700,"loading", { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' }).setOrigin(.5)
-        this.loadingTextLabel=this.add.text(this.getCenter(),725,"please wait..", { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' }).setOrigin(.5)
-
+        this.loadingTextLabel=this.add.text(this.getCenter(),725,"please wait..", { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' }).setOrigin(.5)  
     }
     update(t:number,dt:number)
     {
       this._updateTextLabel(t);
+        this.loadingTextLabel.setText(this.loadingText)
        
     }
     _updateTextLabel(t:number)
     {
+        if(constants.ENV.DEBUG)
+        {
+
+            this.scene.start(constants.SCENES.ARENA_SCENE)
+            return;
+        }
         if(t<1*1000) return;
         else if(t< 2.5 * 1000)
         {

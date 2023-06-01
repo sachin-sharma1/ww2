@@ -1,4 +1,7 @@
 const constants={
+   ENV:{
+    DEBUG:true,
+   },
     DISPLAY:{
         RESOLUTION:{
             FULL_HD:{
@@ -8,6 +11,13 @@ const constants={
         }
     },
     GAME_LOGIC:{
+        PHYSICS:{
+            COLLISION:{
+                CATEGORY_ENEMY:0b0001,
+                CATEGORY_PLAYER:0b0010,
+                CATEGORY_LASER:0b0100,
+            }
+        },
         PROJECTILE:{
             SPEED:-12,
             MAX_COUNT:15,
@@ -20,11 +30,22 @@ const constants={
         DEPTHS:{
             BACKGROUND:100,
             GAME_OBJECTS:200,
-        }
+        },
     },
     SCENES:{
         LOADING_SCENE:"loading",
         ARENA_SCENE:"arena"
+    },
+    ANIMATIONS:{
+        FRAME_RATE:8,
+        ENEMIES:{
+            MINE:"MINE",
+            SPACESHIP_1:"SPACESHIP_1",
+            SPACESHIP_2:"SPACESHIP_2",
+            SPACESHIP_3:"SPACESHIP_3",
+            SPACESHIP_4:"SPACESHIP_4",
+            SPACESHIP_5:"SPACESHIP_5",
+        }
     },
     GAME_OBJECTS:{
         BACKGROUNDS:{
@@ -35,7 +56,21 @@ const constants={
             SHIPS:{
                 DEFAULT:"player"
             }
+        },
+        PROJECTILE:{
+            LASER:"laser"
+        },
+        ENEMIES:{
+            MINE:"mine-1",
+            SPACESHIP_1:"spaceship1-1",
+            SPACESHIP_2:"spaceship2-1",
+            SPACESHIP_3:"spaceship3-1",
+            SPACESHIP_4:"spaceship4-1",
+            SPACESHIP_5:"spaceship5-1",
+        
+          
         }
+        
     }
 };
 

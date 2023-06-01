@@ -21,7 +21,6 @@ export default class BulletFactory
         //create
         const scene = this.parent.scene;
         const point = this.getLocationPoint();
-        
         return new Bullet(scene,point.x,point.y);
          
        
