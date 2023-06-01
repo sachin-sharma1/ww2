@@ -10,7 +10,7 @@ export default class ArenaScene extends Phaser.Scene
    
     //TODO: add separate layer to game objects
     loadInfos;
-    gameObjectsLayer:Phaser.GameObjects.Layer;
+    private gameObjectsLayer:Phaser.GameObjects.Layer;
     background:GameObjects.Image;
     private enemyManger:EnemyManager
     player: Player
@@ -21,18 +21,8 @@ export default class ArenaScene extends Phaser.Scene
       
        
     }
-    preload()
-    {
-       this.load.image(constants.GAME_OBJECTS.BACKGROUNDS.DEFAULT,paths.backgrounds.gameScreen);
-       this.load.image(constants.GAME_OBJECTS.PLAYER.SHIPS.DEFAULT,paths.player.ships.default);
-       this.load.image(constants.GAME_OBJECTS.PROJECTILE.LASER,paths.projectiles.laser.green);
-      
-    }
-  
     create()
     {
-        const b = new Bullet(this,100,200);
-        this.children.add(b);
         this.setUpBackground();
         this.setupPhysics();
         this.setupGameLayer();  
@@ -59,7 +49,13 @@ export default class ArenaScene extends Phaser.Scene
         this.gameObjectsLayer = this.add.layer();
         this.gameObjectsLayer.setDepth(constants.GAME_LOGIC.DEPTHS.GAME_OBJECTS);
         this.setupPlayer();
-        this.gameObjectsLayer.add(this.player);
+        this.addToGameLayer(this.player)
+       
+    }
+    
+    public addToGameLayer(obj:Phaser.GameObjects.GameObject)
+    {
+        this.gameObjectsLayer.add(obj);
     }
     setupPlayer()
     {

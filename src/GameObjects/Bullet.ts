@@ -5,14 +5,15 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite
 
     constructor(scene:Phaser.Scene,x:number,y:number)
     {
-        super(scene.matter.world,x,y,paths.projectiles.laser.green)
+        super(scene.matter.world,x,y,constants.GAME_OBJECTS.PROJECTILE.LASER)
     }
     init()
-    {
+    {  
         
         this.setVelocityY(constants.GAME_LOGIC.PROJECTILE.SPEED)
         this.setCollisionCategory(constants.GAME_LOGIC.PHYSICS.COLLISION.CATEGORY_LASER);
         this.setCollidesWith(constants.GAME_LOGIC.PHYSICS.COLLISION.CATEGORY_ENEMY)
+        this.scene.addToGameLayer(this)
       
     }
     update(t:number,dt:number)

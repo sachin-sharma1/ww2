@@ -4,8 +4,9 @@ import { AnimationFrames, LoadInfo } from "../types";
 import constants from "../constants";
 import Enemy from "./Enemy";
 
-const enemiesPerRow=[1,2,2,4,6];
-const enemiesHeightPerRow=[100,150,300,400,500];
+
+const enemiesPerRow=[1,2,2,4,4,6];
+const enemiesHeightPerRow=[100,150,300,350, 400,500];
 /**
  * handles the margin between space width and 
  */
@@ -32,24 +33,29 @@ export default class EnemyManager extends GameObjects.GameObject
     private enemyGroupLine3:Phaser.GameObjects.Group;
     private enemyGroupLine4:Phaser.GameObjects.Group;
     private enemyGroupLine5:Phaser.GameObjects.Group;
+    private enemyGroupLine6:Phaser.GameObjects.Group;
     private enemyGroupSetupList:Array<boolean>;
     
    
     update(t:number,dt:number): void {
         if(this.stopProcessing)return;
         if(this.count===this.maxCount)return;
-       if(t>3*1000) this.initiateLine5();
+       if(t>3*1000) this.initiateLineParameterized(6);
+       if(t>4*1000) this.initiateLineParameterized(5);
+       if(t>5*1000) this.initiateLineParameterized(4);
+       if(t>6*1000) this.initiateLineParameterized(3);
+       if(t>7*1000) this.initiateLineParameterized(2);
+       if(t>8*1000) this.initiateLineParameterized(1);
 
     }
-    initiateLine5()
-    {
-       
-        const rowNum=4;
-        //maybe we have already initiated and in that case simply return
+   
+    initiateLineParameterized(rowNum:number)
+    {   
         if(this.enemyGroupSetupList[rowNum])return;
-      
+        const anim =this.getAnimationFromRow(rowNum);
+        const textureName = this.getTextureNameFromRow(rowNum);
         const height=enemiesHeightPerRow[rowNum];
-        const textureName=constants.GAME_OBJECTS.ENEMIES.MINE
+       
         const texture=this.scene.textures.get(textureName)
     
         const numEnemies= enemiesPerRow[rowNum];
@@ -60,16 +66,38 @@ export default class EnemyManager extends GameObjects.GameObject
         for(let i=0;i<xPoints.length;i++)
         {
             enemy=new Enemy(this.scene,xPoints[i],height,textureName);
+            enemy.play(anim)
+        
            
-            console.log(enemy)
             enemy.setDepth(constants.GAME_LOGIC.DEPTHS.GAME_OBJECTS)
-            this.enemyGroupLine5.add(enemy);
+            this.enemyGroupLine5.add(enemy)
+            this.scene.addToGameLayer(enemy)
         }
         this.enemyGroupSetupList[rowNum]=true;
-       
-      
-
     }
+    getAnimationFromRow(rowNum:number):string
+    {
+        if(rowNum==6)return "MINE"
+        //TODO: need to find better way
+        if(rowNum==5) return "SPACESHIP_1"
+        if(rowNum==4) return "SPACESHIP_2"
+        if(rowNum==3) return "SPACESHIP_3"
+        if(rowNum==2) return "SPACESHIP_4"
+        return "SPACESHIP_5"
+    }
+    getTextureNameFromRow(rowNum:number):string
+    {
+        if(rowNum==6)return constants.GAME_OBJECTS.ENEMIES.MINE;
+        //TODO: need to find better way
+        if(rowNum==5) return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_1
+        if(rowNum==4) return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_2
+        if(rowNum==3) return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_3
+        if(rowNum==2) return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_4
+        return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_5
+       
+     
+    }
+
     getInitiateXAxisPoints(startX:number,width:number,texture:Phaser.Textures.Texture,numEnemies:number):Array<number>
     {
         const textureWidth=texture.get("_BASE").width
@@ -105,7 +133,8 @@ export default class EnemyManager extends GameObjects.GameObject
         this.enemyGroupLine3 = new Phaser.GameObjects.Group(this.scene);
         this.enemyGroupLine4 = new Phaser.GameObjects.Group(this.scene);
         this.enemyGroupLine5 = new Phaser.GameObjects.Group(this.scene);
-        this.enemyGroupSetupList=[false,false,false,false,false];
+        this.enemyGroupLine6 = new Phaser.GameObjects.Group(this.scene);
+        this.enemyGroupSetupList=[false,false,false,false,false,false];
     }
     cacheAnimations():void
     {

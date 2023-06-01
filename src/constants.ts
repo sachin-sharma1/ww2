@@ -47,6 +47,9 @@ const constants={
             SPACESHIP_5:"SPACESHIP_5",
         }
     },
+    EVENTS:{
+        ON_ADD:"_on_add"
+    },
     GAME_OBJECTS:{
         BACKGROUNDS:{
             DEFAULT:"background"
