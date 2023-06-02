@@ -6,7 +6,14 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite
     {
         super(scene.matter.world,x,y,texture);
         this.world=scene.matter.world;
+        this.on(Phaser.GameObjects.Events.DESTROY,this.onDelete);
         
+    }
+    
+    onDelete()
+    {
+       
+        console.log("i am being deleted")
     }
     
 }

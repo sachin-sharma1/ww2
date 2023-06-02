@@ -6,7 +6,7 @@ import Enemy from "./Enemy";
 
 
 const enemiesPerRow=[1,2,2,4,4,6];
-const enemiesHeightPerRow=[100,150,300,350, 400,500];
+const enemiesHeightPerRow=[50,150,300,400,500,600];
 /**
  * handles the margin between space width and 
  */
@@ -23,6 +23,7 @@ export default class EnemyManager extends GameObjects.GameObject
      * @description current level of the game acts as parent source of truth
      */
     private level:number
+    private st:number;
     /**
      * 
      */
@@ -40,12 +41,13 @@ export default class EnemyManager extends GameObjects.GameObject
     update(t:number,dt:number): void {
         if(this.stopProcessing)return;
         if(this.count===this.maxCount)return;
-       if(t>3*1000) this.initiateLineParameterized(6);
-       if(t>4*1000) this.initiateLineParameterized(5);
-       if(t>5*1000) this.initiateLineParameterized(4);
-       if(t>6*1000) this.initiateLineParameterized(3);
-       if(t>7*1000) this.initiateLineParameterized(2);
-       if(t>8*1000) this.initiateLineParameterized(1);
+        if(t-this.st>3*1000) this.initiateLineParameterized(5);
+        if(t-this.st>4*1000) this.initiateLineParameterized(4);
+        if(t-this.st>5*1000) this.initiateLineParameterized(3);
+
+        if(t-this.st>7*1000) this.initiateLineParameterized(2);
+        if(t-this.st>8*1000) this.initiateLineParameterized(1);
+        if(t-this.st>8*1000) this.initiateLineParameterized(0);
 
     }
    
@@ -70,40 +72,50 @@ export default class EnemyManager extends GameObjects.GameObject
         
            
             enemy.setDepth(constants.GAME_LOGIC.DEPTHS.GAME_OBJECTS)
-            this.enemyGroupLine5.add(enemy)
+            this.getEnemyGroupFromRow(rowNum).add(enemy)
             this.scene.addToGameLayer(enemy)
         }
         this.enemyGroupSetupList[rowNum]=true;
     }
+    getEnemyGroupFromRow(rowNum:number):Phaser.GameObjects.Group
+    {
+       if(rowNum==5) return this.enemyGroupLine6;
+       if(rowNum==4) return this.enemyGroupLine5;
+       if(rowNum==3) return this.enemyGroupLine4;
+       if(rowNum==2) return this.enemyGroupLine3;
+       if(rowNum==1) return this.enemyGroupLine2;
+       return this.enemyGroupLine1;
+    }
     getAnimationFromRow(rowNum:number):string
     {
-        if(rowNum==6)return "MINE"
+        if(rowNum==5)return "MINE"
         //TODO: need to find better way
-        if(rowNum==5) return "SPACESHIP_1"
-        if(rowNum==4) return "SPACESHIP_2"
-        if(rowNum==3) return "SPACESHIP_3"
-        if(rowNum==2) return "SPACESHIP_4"
-        return "SPACESHIP_5"
+        if(rowNum==4) return "SPACESHIP5"
+        if(rowNum==3) return "SPACESHIP4"
+        if(rowNum==2) return "SPACESHIP3"
+        if(rowNum==1) return "SPACESHIP2"
+        return "SPACESHIP1"
     }
     getTextureNameFromRow(rowNum:number):string
     {
-        if(rowNum==6)return constants.GAME_OBJECTS.ENEMIES.MINE;
+        if(rowNum==5)return constants.GAME_OBJECTS.ENEMIES.MINE;
         //TODO: need to find better way
-        if(rowNum==5) return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_1
-        if(rowNum==4) return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_2
-        if(rowNum==3) return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_3
-        if(rowNum==2) return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_4
-        return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_5
+        if(rowNum==4) return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_5
+        if(rowNum==3) return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_4
+        if(rowNum==2) return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_3
+        if(rowNum==1) return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_2
+        return constants.GAME_OBJECTS.ENEMIES.SPACESHIP_1
        
      
     }
 
     getInitiateXAxisPoints(startX:number,width:number,texture:Phaser.Textures.Texture,numEnemies:number):Array<number>
     {
-        const textureWidth=texture.get("_BASE").width
+      if(numEnemies==1)return [this.scene.scale.width/2];
+      if(numEnemies==2)return [this.scene.scale.width/4,this.scene.scale.width*.75];
         const spaceBetween:number= width/(numEnemies);
         const arr=[];
-        let prev=startX+textureWidth;
+        let prev=startX+150;
         arr.push(startX);
         let curr;
         
@@ -116,13 +128,14 @@ export default class EnemyManager extends GameObjects.GameObject
         return arr;
     }
    
-    constructor(scene:Scene,defaultLevel=1)
+    constructor(scene:Scene,t=0)
     {
         super(scene,"enemyManager")
-        this.level=defaultLevel;
+        this.level=1;
         this.stopProcessing=false;
         this.count=0;
         this.maxCount=5;
+        this.st=t;
         
     }
     public init():void
@@ -161,14 +174,7 @@ export default class EnemyManager extends GameObjects.GameObject
         }
         return result;
     }
-    createMine(x:number,y:number)
-    {
 
-    }
-    createRandom()
-    {
-
-    }
     stop()
     {
         this.stopProcessing=false;

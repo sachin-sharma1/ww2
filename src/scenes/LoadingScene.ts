@@ -83,15 +83,15 @@ export default class LoadingScene extends Phaser.Scene
         {
          this.updateTextLabel.text="Do you really think we are loading!!"
         }
-        else if(t < 3.5 * 1000)
+        else if(t < 3 * 1000)
         {
          this.updateTextLabel.text="And I thought my jokes are bad!"
         }
-        else if(t < 4*1000)
+        else if(t < 3.5*1000)
         {
             this.updateTextLabel.text="I see dead people(here goes spoilers!)"
         }
-        else if(t < 5  *1000)
+        else if(t < 4  *1000)
         {
             this.updateTextLabel.text="I will show you what i can do! Go back"
             this.progressBar.clear();

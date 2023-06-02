@@ -34,6 +34,12 @@ export default class ArenaScene extends Phaser.Scene
     setupPhysics()
     {
         this.matter.world.setGravity(0,0);
+        this.matter.world.on(Phaser.Physics.Matter.Events.COLLISION_START,this.onCollisionStart)
+    }
+    onCollisionStart(event:any,bodyA:any,bodyB:any)
+    {
+       bodyA.gameObject.destroy();
+       bodyB.gameObject.destroy();
     }
     setUpBackground()
     {
@@ -70,7 +76,14 @@ export default class ArenaScene extends Phaser.Scene
     }
     update(time: number, delta: number): void {
         this.player.update(time,delta);
+      if(!this.enemyManger)
+      {
+        this.enemyManger = new EnemyManager(this,time);
+        this.enemyManger.init();
+      }else
+      {
         this.enemyManger.update(time,delta);
+      }
     }
     getScreenCenter():Geom.Point
     {
