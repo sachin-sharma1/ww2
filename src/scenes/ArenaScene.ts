@@ -24,6 +24,8 @@ export default class ArenaScene extends Phaser.Scene
     create()
     {
         this.setUpBackground();
+
+        this.setupBackgroundAudio();
         this.setupPhysics();
         this.setupGameLayer();  
         this.enemyManger = new EnemyManager(this,1);
@@ -57,6 +59,10 @@ export default class ArenaScene extends Phaser.Scene
         this.setupPlayer();
         this.addToGameLayer(this.player)
        
+    }
+    setupBackgroundAudio()
+    {
+        this.sound.play(constants.AUDIO.BACKGROUND_AUDIO,{loop:true})
     }
     
     public addToGameLayer(obj:Phaser.GameObjects.GameObject)

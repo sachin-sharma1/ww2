@@ -17,6 +17,9 @@ const paths={
             default:"assets/playerShip.png"
         }
     },
+    audio:{
+        background:"assets/background.mp3"
+    },
     enemies,
     miscellaneous:{
         companyLogo:"assets/companyLogo.png"

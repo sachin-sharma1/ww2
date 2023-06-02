@@ -10,6 +10,9 @@ const constants={
             }
         }
     },
+    AUDIO:{
+        BACKGROUND_AUDIO:"bgAudio"
+    },
     GAME_LOGIC:{
         PHYSICS:{
             COLLISION:{
