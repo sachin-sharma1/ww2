@@ -30,6 +30,17 @@ export default class ArenaScene extends Phaser.Scene
         this.setupGameLayer();  
         this.enemyManger = new EnemyManager(this,1);
         this.enemyManger.init();
+        const smokey = this.add.particles(650, 550, 'flares',
+        {
+            frame: 'white',
+            color: [ 0x040d61, 0xfacc22, 0xf89800, 0xf83600, 0x9f0404, 0x4b4a4f, 0x353438, 0x040404 ],
+            lifespan: 200,
+            angle: { min: -100, max: -80 },
+            scale: 0.75,
+            speed: { min: 200, max: 300 },
+            advance: 2000,
+            blendMode: 'ADD'
+        });
        
       
     }
@@ -40,8 +51,8 @@ export default class ArenaScene extends Phaser.Scene
     }
     onCollisionStart(event:any,bodyA:any,bodyB:any)
     {
-       bodyA.gameObject.destroy();
-       bodyB.gameObject.destroy();
+       bodyA.gameObject.callBackOnCollision();
+       bodyB.gameObject.callBackOnCollision();
     }
     setUpBackground()
     {

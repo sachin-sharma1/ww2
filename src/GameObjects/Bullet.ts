@@ -31,4 +31,8 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite
         if(t <10 *1000) this.destroy();
 
     }
+    callBackOnCollision()
+    {
+        this.destroy();
+    }
 }

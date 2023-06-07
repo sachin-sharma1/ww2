@@ -67,7 +67,7 @@ export default class EnemyManager extends GameObjects.GameObject
         let enemy:Enemy;
         for(let i=0;i<xPoints.length;i++)
         {
-            enemy=new Enemy(this.scene,xPoints[i],height,textureName);
+            enemy=new Enemy(this.scene,xPoints[i],height,textureName,6-rowNum);
             enemy.play(anim)
         
            

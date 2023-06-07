@@ -3,7 +3,8 @@ import constants from '../constants';
 export default class Enemy extends Phaser.Physics.Matter.Sprite
 {
     world:Phaser.Physics.Matter.World;
-    constructor(scene:Scene,x:number,y:number,texture: string | Phaser.Textures.Texture)
+    health:number;
+    constructor(scene:Scene,x:number,y:number,texture: string | Phaser.Textures.Texture,health=1)
     {
         super(scene.matter.world,x,y,texture);
         this.world=scene.matter.world;
@@ -22,12 +23,23 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite
             onUpdate
             
         });
+        this.health=health;
+        this.setStatic(true)
+
         
     }
     
     onDelete()
     {
         console.log("i am being deleted")
+    }
+    callBackOnCollision()
+    {
+        this.health--;
+        if(this.health<=0)
+        {
+            this.destroy();
+        }
     }
     
 }

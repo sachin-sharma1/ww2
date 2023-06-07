@@ -24,8 +24,23 @@ export default class Player extends Phaser.Physics.Matter.Sprite
         this.addKeyBoardEvents();
         this.setupPhysics();
         this.setupProjectilesGroup();
+       // this.setupFlares();
         this.name=constants.GAME_OBJECTS.NAMES.PLAYER;
        
+    }
+    setupFlares()
+    {
+        const config={
+            frame: 'white',
+            color: [ 0x040d61, 0xfacc22, 0xf89800, 0xf83600, 0x9f0404, 0x4b4a4f, 0x353438, 0x040404 ],
+            lifespan: 200,
+            angle: { min: -100, max: -80 },
+            scale: 0.75,
+            speed: { min: 200, max: 300 },
+            advance: 2000,
+            blendMode: 'ADD'
+        }
+        const smokey = this.scene.add.particles(650, 550, 'flares',config);
     }
 
     setupProjectilesGroup()
@@ -72,6 +87,10 @@ export default class Player extends Phaser.Physics.Matter.Sprite
         bullet.init()
         this.projectileGroup.add(bullet);
         
+    }
+    callBackOnCollision()
+    {
+        console.log("i collided");
     }
 
     horizontalWrap()
