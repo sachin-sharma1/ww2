@@ -54,6 +54,11 @@ const constants={
         ON_ADD:"_on_add"
     },
     GAME_OBJECTS:{
+        NAMES:{
+            PLAYER:"player",
+            BULLET:"bullet",
+            ENEMY:"enemy"
+        },
         BACKGROUNDS:{
             DEFAULT:"background"
         },

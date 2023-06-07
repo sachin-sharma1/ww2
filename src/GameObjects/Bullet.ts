@@ -14,6 +14,7 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite
         this.setCollisionCategory(constants.GAME_LOGIC.PHYSICS.COLLISION.CATEGORY_LASER);
         this.setCollidesWith(constants.GAME_LOGIC.PHYSICS.COLLISION.CATEGORY_ENEMY)
         this.scene.addToGameLayer(this)
+        this.name=constants.GAME_OBJECTS.NAMES.BULLET;
       
     }
     update(t:number,dt:number)

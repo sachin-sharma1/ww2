@@ -1,4 +1,5 @@
 import {Scene} from 'phaser'
+import constants from '../constants';
 export default class Enemy extends Phaser.Physics.Matter.Sprite
 {
     world:Phaser.Physics.Matter.World;
@@ -11,6 +12,8 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite
             const value = Math.floor(tween.getValue());
             this.setTint(Phaser.Display.Color.GetColor(value, value, value));
         }
+
+        this.name=constants.GAME_OBJECTS.NAMES.ENEMY;
         
         this.scene.tweens.addCounter({
             from: 0,

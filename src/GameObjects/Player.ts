@@ -24,6 +24,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite
         this.addKeyBoardEvents();
         this.setupPhysics();
         this.setupProjectilesGroup();
+        this.name=constants.GAME_OBJECTS.NAMES.PLAYER;
        
     }
 
