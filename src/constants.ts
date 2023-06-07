@@ -11,7 +11,8 @@ const constants={
         }
     },
     AUDIO:{
-        BACKGROUND_AUDIO:"bgAudio"
+        BACKGROUND_AUDIO:"bgAudio",
+        ENEMY_GROUP_ENTRY:"groupEntry"
     },
     GAME_LOGIC:{
         PHYSICS:{

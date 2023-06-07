@@ -25,6 +25,7 @@ export default class LoadingScene extends Phaser.Scene
         this.load.image(constants.GAME_OBJECTS.BACKGROUNDS.DEFAULT,paths.backgrounds.gameScreen);
         this.load.image(constants.GAME_OBJECTS.PLAYER.SHIPS.DEFAULT,paths.player.ships.default);
         this.load.audio(constants.AUDIO.BACKGROUND_AUDIO,[paths.audio.background])
+        this.load.audio(constants.AUDIO.ENEMY_GROUP_ENTRY,[paths.audio.enemyGroupEntry])
         this.load.image("laser",paths.projectiles.laser.green);
         this.progressBar=this.add.graphics();
         this.load.on('progress',(value:number)=>{

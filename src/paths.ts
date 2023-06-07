@@ -18,7 +18,8 @@ const paths={
         }
     },
     audio:{
-        background:"assets/background.mp3"
+        background:"assets/background.mp3",
+        enemyGroupEntry:"assets/groupEntry.mp3"
     },
     enemies,
     miscellaneous:{

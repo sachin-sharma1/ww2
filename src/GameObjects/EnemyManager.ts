@@ -42,18 +42,19 @@ export default class EnemyManager extends GameObjects.GameObject
         if(this.stopProcessing)return;
         if(this.count===this.maxCount)return;
         if(t-this.st>3*1000) this.initiateLineParameterized(5);
-        if(t-this.st>4*1000) this.initiateLineParameterized(4);
-        if(t-this.st>5*1000) this.initiateLineParameterized(3);
+        if(t-this.st>4.5*1000) this.initiateLineParameterized(4);
+        if(t-this.st>6*1000) this.initiateLineParameterized(3);
 
-        if(t-this.st>7*1000) this.initiateLineParameterized(2);
-        if(t-this.st>8*1000) this.initiateLineParameterized(1);
-        if(t-this.st>8*1000) this.initiateLineParameterized(0);
+        if(t-this.st>7.5*1000) this.initiateLineParameterized(2);
+        if(t-this.st>9*1000) this.initiateLineParameterized(1);
+        if(t-this.st>10.5*1000) this.initiateLineParameterized(0);
 
     }
    
     initiateLineParameterized(rowNum:number)
     {   
         if(this.enemyGroupSetupList[rowNum])return;
+        this.scene.sound.play(constants.AUDIO.ENEMY_GROUP_ENTRY,{loop:false,volume:.5})
         const anim =this.getAnimationFromRow(rowNum);
         const textureName = this.getTextureNameFromRow(rowNum);
         const height=enemiesHeightPerRow[rowNum];
