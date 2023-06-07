@@ -12,7 +12,8 @@ const constants={
     },
     AUDIO:{
         BACKGROUND_AUDIO:"bgAudio",
-        ENEMY_GROUP_ENTRY:"groupEntry"
+        ENEMY_GROUP_ENTRY:"groupEntry",
+        BULLET_FIRE:"bulletFire"
     },
     GAME_LOGIC:{
         PHYSICS:{
@@ -23,13 +24,14 @@ const constants={
             }
         },
         PROJECTILE:{
-            SPEED:-12,
+            SPEED:-9,
             MAX_COUNT:15,
-            MIN_TIME_GAP:80
+            MIN_TIME_GAP:150
         },
         ENEMY:{
             PER_LEVEL_TIME_GAP:[2.7,2.3,2.0,1.5,1],
-            PER_LEVEL_COUNT:[2,3,4,5,5]
+            PER_LEVEL_COUNT:[2,3,4,5,5],
+            HEALTH_MUL_FACTOR:1.2,
         },
         DEPTHS:{
             BACKGROUND:100,

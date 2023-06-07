@@ -54,7 +54,7 @@ export default class EnemyManager extends GameObjects.GameObject
     initiateLineParameterized(rowNum:number)
     {   
         if(this.enemyGroupSetupList[rowNum])return;
-        this.scene.sound.play(constants.AUDIO.ENEMY_GROUP_ENTRY,{loop:false,volume:.5})
+       if(rowNum==0) this.scene.sound.play(constants.AUDIO.ENEMY_GROUP_ENTRY,{loop:false,volume:.5})
         const anim =this.getAnimationFromRow(rowNum);
         const textureName = this.getTextureNameFromRow(rowNum);
         const height=enemiesHeightPerRow[rowNum];

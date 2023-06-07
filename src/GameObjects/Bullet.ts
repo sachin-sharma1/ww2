@@ -15,7 +15,14 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite
         this.setCollidesWith(constants.GAME_LOGIC.PHYSICS.COLLISION.CATEGORY_ENEMY)
         this.scene.addToGameLayer(this)
         this.name=constants.GAME_OBJECTS.NAMES.BULLET;
+        this.addSoundTimer();
       
+    }
+    addSoundTimer()
+    {
+        this.scene.time.delayedCall(25,()=>{
+            this.scene.sound.play(constants.AUDIO.BULLET_FIRE,{loop:false,volume:.5})
+        });
     }
     update(t:number,dt:number)
     {

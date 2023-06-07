@@ -19,6 +19,7 @@ const paths={
     },
     audio:{
         background:"assets/background.mp3",
+        bulletFire:"assets/bulletFire.mp3",
         enemyGroupEntry:"assets/groupEntry.mp3"
     },
     enemies,
