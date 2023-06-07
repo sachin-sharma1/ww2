@@ -31,8 +31,6 @@ export default class ArenaScene extends Phaser.Scene
         this.enemyManger = new EnemyManager(this,1);
         this.enemyManger.init();
       
-       
-      
     }
     setupPhysics()
     {
@@ -56,6 +54,7 @@ export default class ArenaScene extends Phaser.Scene
     setupGameLayer()
     {
         this.gameObjectsLayer = this.add.layer();
+        this.gameObjectsLayer.setName(constants.GAME_OBJECTS.LAYERS.GAME_OBJECTS);
         this.gameObjectsLayer.setDepth(constants.GAME_LOGIC.DEPTHS.GAME_OBJECTS);
         this.setupPlayer();
         this.addToGameLayer(this.player)

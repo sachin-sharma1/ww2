@@ -34,17 +34,29 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite
         
     }
     
-    onDelete()
-    {
-        console.log("i am being deleted")
-    }
+   
     callBackOnCollision()
     {
         this.health--;
 
         if(this.health<=0)
         {
-            this.destroy();
+            const emitter= this.scene.add.particles(this.x,this.y,"flares",{
+                frame: [ 'red', 'yellow', 'green' ],
+            lifespan: 4000,
+            speed: { min: 150, max: 250 },
+            scale: { start: 0.8, end: 0 },
+            gravityY: 150,
+            blendMode: 'ADD',
+            emitting: false
+            })
+            emitter.explode(25);
+            this.scene.addToGameLayer(emitter);
+           
+            this.scene.time.delayedCall(25,()=>{
+                this.destroy();
+                
+            });
         }else
         {
             this.preFX?.addPixelate(this.health/this.maxHealth)

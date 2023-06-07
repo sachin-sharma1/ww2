@@ -20,9 +20,9 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite
     }
     addSoundTimer()
     {
-        this.scene.time.delayedCall(25,()=>{
-            this.scene.sound.play(constants.AUDIO.BULLET_FIRE,{loop:false,volume:.5})
-        });
+       
+        this.scene.sound.play(constants.AUDIO.BULLET_FIRE,{loop:false,volume:.5})
+      
     }
     update(t:number,dt:number)
     {
@@ -36,7 +36,6 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite
         if(this.x <topLeftBoundX || this.x>bottomRightBoundX) this.destroy();
         if(this.y <topLeftBoundY || this.y>bottomRightBoundY) this.destroy();
         if(t <10 *1000) this.destroy();
-
     }
     callBackOnCollision()
     {

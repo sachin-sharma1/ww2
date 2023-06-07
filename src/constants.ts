@@ -71,6 +71,9 @@ const constants={
                 DEFAULT:"player"
             }
         },
+        LAYERS:{
+            GAME_OBJECTS:"gameObjects"
+        },
         PROJECTILE:{
             LASER:"laser"
         },

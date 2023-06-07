@@ -21,12 +21,17 @@ export default class Player extends Phaser.Physics.Matter.Sprite
     
     init()
     {
+        this.setupSprite();
         this.addKeyBoardEvents();
         this.setupPhysics();
         this.setupProjectilesGroup();
        // this.setupFlares();
         this.name=constants.GAME_OBJECTS.NAMES.PLAYER;
        
+    }
+    setupSprite()
+    {
+        this.setScale(1.5)
     }
     setupFlares()
     {
@@ -53,6 +58,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite
     {
         //make sure that it doesn't rotate when forces are applied on it
         this.setFixedRotation();
+        this.setCollisionCategory(constants.GAME_LOGIC.PHYSICS.COLLISION.CATEGORY_PLAYER);
+        this.setCollidesWith(constants.GAME_LOGIC.PHYSICS.COLLISION.CATEGORY_ENEMY)
     }
 
     addKeyBoardEvents()
@@ -141,4 +148,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite
         if(this.cursors.left.isDown && !this.cursors.right.isDown) return -1;
         return 0;
     }   
+    callBackOnCollision()
+    {
+        console.log("yes player did collide")
+    }
 }

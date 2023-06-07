@@ -20,7 +20,7 @@ export default class LoadingScene extends Phaser.Scene
     }
     preload()
     {
-        this.load.atlas('flares', 'assets/particles/flares.png', 'assets/particles/flares.json');
+        this.load.atlas('flares', 'assets/flares.png', 'assets/flares.json');
         this.load.image(constants.GAME_OBJECTS.LOGO,paths.miscellaneous.companyLogo)
         this.load.image(constants.GAME_OBJECTS.BACKGROUNDS.DEFAULT,paths.backgrounds.gameScreen);
         this.load.image(constants.GAME_OBJECTS.PLAYER.SHIPS.DEFAULT,paths.player.ships.default);
