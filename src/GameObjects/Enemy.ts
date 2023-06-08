@@ -41,6 +41,7 @@ export default class Enemy extends Phaser.Physics.Matter.Sprite
 
         if(this.health<=0)
         {
+            this.scene.onEnemyDestroy();
             const emitter= this.scene.add.particles(this.x,this.y,"flares",{
                 frame: [ 'red', 'yellow', 'green' ],
             lifespan: 4000,

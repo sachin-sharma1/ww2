@@ -11,9 +11,12 @@ export default class ArenaScene extends Phaser.Scene
     //TODO: add separate layer to game objects
     loadInfos;
     private gameObjectsLayer:Phaser.GameObjects.Layer;
+    private uiLayer:Phaser.GameObjects.Layer;
     background:GameObjects.Image;
     private enemyManger:EnemyManager
     player: Player
+    score:number;
+    scoreBoard:Phaser.GameObjects.Text;
     constructor()
     {
         super("arena");
@@ -23,13 +26,17 @@ export default class ArenaScene extends Phaser.Scene
     }
     create()
     {
+        this.score=0;
         this.setUpBackground();
 
         this.setupBackgroundAudio();
         this.setupPhysics();
         this.setupGameLayer();  
+        this.setupUILayer();  
         this.enemyManger = new EnemyManager(this,1);
         this.enemyManger.init();
+        
+
       
     }
     setupPhysics()
@@ -51,6 +58,15 @@ export default class ArenaScene extends Phaser.Scene
         this.background.setScale(xScale,yScale)
         this.background.setDepth(constants.GAME_LOGIC.DEPTHS.BACKGROUND)
     }
+    onEnemyDestroy()
+    {
+        this.score++;
+      
+    }
+    updateScoreBoard()
+    {
+        this.scoreBoard.setText(`Score is : ${this.score}`)
+    }
     setupGameLayer()
     {
         this.gameObjectsLayer = this.add.layer();
@@ -59,6 +75,16 @@ export default class ArenaScene extends Phaser.Scene
         this.setupPlayer();
         this.addToGameLayer(this.player)
        
+    }
+    setupUILayer()
+    {
+        this.uiLayer = this.add.layer();
+        this.uiLayer.setName(constants.GAME_OBJECTS.LAYERS.UI);
+        this.uiLayer.setDepth(constants.GAME_LOGIC.DEPTHS.UI);
+        this.scoreBoard = this.add.bitmapText(0, 0, 'ice','Score : 0',32);
+        this.updateScoreBoard();
+        this.uiLayer.add(this.scoreBoard)
+     
     }
     setupBackgroundAudio()
     {
@@ -94,5 +120,40 @@ export default class ArenaScene extends Phaser.Scene
     getScreenCenter():Geom.Point
     {
         return  new Geom.Point(this.scale.width/2,this.scale.height/2);
+    }
+    onPlayerEnd()
+    {
+        const message = [
+            'Welcome to the',
+            'Phaser 3 Wipe FX',
+            'Using Text PreFX',
+            'and a Tween'
+        ];
+
+        const text = this.add.text(this.scale.width/2, this.scale.height/2, "Game Over", { fontFamily: 'Arial Black', fontSize: 80 });
+        this.addToGameLayer(text);
+
+        const gradient = text.context.createLinearGradient(0, 0, 0, text.height);
+
+        gradient.addColorStop(0, '#f26522');
+        gradient.addColorStop(0.5, '#fff200');
+        gradient.addColorStop(0.5, '#f7941d');
+        gradient.addColorStop(1, '#ed1c24');
+
+        text.setFill(gradient);
+        text.setOrigin(0.5, 0.5);
+        
+
+        const fx = text.preFX?.addReveal();
+
+        this.tweens.add({
+            targets: fx,
+            progress: 1,
+            hold: 500,
+            duration: 3000,
+            repeat: -1,
+
+        });
+        this.scene.stop();
     }
 }

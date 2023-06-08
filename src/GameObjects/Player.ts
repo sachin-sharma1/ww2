@@ -10,6 +10,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite
     projectileGroup:Phaser.GameObjects.Group;
     cursors:Phaser.Types.Input.Keyboard.CursorKeys;
     bFactory:BulletFactory
+    emitter:Phaser.GameObjects.Particles.ParticleEmitter;
+    score:number;
     constructor(scene:Scene,x:number,y:number,texture:string)
     {
         super(scene.matter.world,x,y,texture);
@@ -25,27 +27,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite
         this.addKeyBoardEvents();
         this.setupPhysics();
         this.setupProjectilesGroup();
-       // this.setupFlares();
+   this.setupTail();
         this.name=constants.GAME_OBJECTS.NAMES.PLAYER;
+        this.score=1;
        
     }
     setupSprite()
     {
         this.setScale(1.5)
-    }
-    setupFlares()
-    {
-        const config={
-            frame: 'white',
-            color: [ 0x040d61, 0xfacc22, 0xf89800, 0xf83600, 0x9f0404, 0x4b4a4f, 0x353438, 0x040404 ],
-            lifespan: 200,
-            angle: { min: -100, max: -80 },
-            scale: 0.75,
-            speed: { min: 200, max: 300 },
-            advance: 2000,
-            blendMode: 'ADD'
-        }
-        const smokey = this.scene.add.particles(650, 550, 'flares',config);
     }
 
     setupProjectilesGroup()
@@ -66,9 +55,31 @@ export default class Player extends Phaser.Physics.Matter.Sprite
     {
         this.cursors=this.scene.input.keyboard.createCursorKeys();
     }
+    setupTail()
+    {
+       this.emitter = this.scene.add.particles(0, 0, 'space', {
+            frame: 'blue',
+            speed: {
+                onEmit: () => MAX_VELOCITY/4
+            },
+            lifespan: {
+                onEmit: () => Phaser.Math.Percent(5, 0, 300) * 20000
+            },
+            alpha: {
+                onEmit: () => Phaser.Math.Percent(5, 0, 300) * 1000
+
+            },
+            scale: { start: 1.0, end: 0 },
+            blendMode: 'ADD'
+        });
+        this.scene.addToGameLayer(this.emitter)
+        this.emitter.startFollow(this);
+    }
     
     update(t:number,dt:number)
     {
+        if(!this.active)return;
+       
         this.updateVelocity(dt);
         this.horizontalWrap();
         this.verticalWrap();
@@ -94,10 +105,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite
         bullet.init()
         this.projectileGroup.add(bullet);
         
-    }
-    callBackOnCollision()
-    {
-        console.log("i collided");
     }
 
     horizontalWrap()
@@ -126,10 +133,18 @@ export default class Player extends Phaser.Physics.Matter.Sprite
             this.y=-halfHeight
         }
     }
+    onEnemyDie()
+    {
+        this.score++;
+    }
 
     updateVelocity(dt:number)
     {
-        
+        if(!this.active)
+        {
+           
+          this.scene.onPlayerEnd();
+        }
         this.setVelocity(this.getXAxisDirectionVector()*MAX_VELOCITY,this.getYAxisDirectionVector()*MAX_VELOCITY)
     }
     
@@ -150,6 +165,25 @@ export default class Player extends Phaser.Physics.Matter.Sprite
     }   
     callBackOnCollision()
     {
-        console.log("yes player did collide")
+        this.setStatic(true);
+        this.setActive(false);
+        const updateTint = (tween:Phaser.Tweens.Tween)=>{
+            const value = Math.floor(tween.getValue());
+            this.setTint(Phaser.Display.Color.GetColor(value, value, value));
+        }
+      
+        this.scene.tweens.addCounter({
+            from: 255,
+            to: 0,
+            duration: 3000,
+            onUpdate:updateTint,
+            onComplete:()=>{
+                this.emitter.destroy();
+                this.setActive(false);
+                this.scene.onPlayerEnd();
+            }
+            
+        });
+       
     }
 }

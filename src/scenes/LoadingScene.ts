@@ -2,7 +2,7 @@ import { getAllLoadInfos } from "../AssetManager";
 import constants from "../constants"
 import paths from "../paths"
 import { LoadInfo } from "../types";
-import ArenaScene from "./ArenaScene";
+import WebFontLoader from 'webfontloader'
 export default class LoadingScene extends Phaser.Scene
 {
     updateTextLabel:Phaser.GameObjects.Text;
@@ -20,7 +20,9 @@ export default class LoadingScene extends Phaser.Scene
     }
     preload()
     {
+        this.load.bitmapFont('ice', 'assets/iceicebaby.png', 'assets/iceicebaby.xml');
         this.load.atlas('flares', 'assets/flares.png', 'assets/flares.json');
+        this.load.atlas('space', 'assets/space.png', 'assets/space.json');
         this.load.image(constants.GAME_OBJECTS.LOGO,paths.miscellaneous.companyLogo)
         this.load.image(constants.GAME_OBJECTS.BACKGROUNDS.DEFAULT,paths.backgrounds.gameScreen);
         this.load.image(constants.GAME_OBJECTS.PLAYER.SHIPS.DEFAULT,paths.player.ships.default);
@@ -65,8 +67,8 @@ export default class LoadingScene extends Phaser.Scene
     create()
     {
         this.logoSprite=this.add.sprite(this.getCenter(),100+250,constants.GAME_OBJECTS.LOGO);
-        this.updateTextLabel=this.add.text(this.getCenter(),700,"loading", { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' }).setOrigin(.5)
-        this.loadingTextLabel=this.add.text(this.getCenter(),725,"please wait..", { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' }).setOrigin(.5)  
+        this.updateTextLabel=this.add.bitmapText(this.getCenter(),700,"ice","loading").setOrigin(.5)
+        this.loadingTextLabel=this.add.bitmapText(this.getCenter(),725,"ice","please wait..").setOrigin(.5)  
     }
     update(t:number,dt:number)
     {

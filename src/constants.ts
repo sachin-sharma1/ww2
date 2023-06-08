@@ -36,6 +36,7 @@ const constants={
         DEPTHS:{
             BACKGROUND:100,
             GAME_OBJECTS:200,
+            UI:300,
         },
     },
     SCENES:{
@@ -72,7 +73,8 @@ const constants={
             }
         },
         LAYERS:{
-            GAME_OBJECTS:"gameObjects"
+            GAME_OBJECTS:"gameObjects",
+            UI:"ui"
         },
         PROJECTILE:{
             LASER:"laser"
