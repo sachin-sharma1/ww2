@@ -179,6 +179,35 @@ export default class EnemyManager extends GameObjects.GameObject
     stop()
     {
         this.stopProcessing=false;
+        this.hideAll();
+    }
+    hideAll()
+    {
+        const scene=this.scene;
+        const tweenEnemy =function(element:any)
+        {
+            scene.tweens.addCounter({
+                from:255,
+                to:0,
+                duration:2500,
+                onUpdate:function(tween)
+                {
+                    const value = Math.floor(tween.getValue());
+
+                element.setTint(Phaser.Display.Color.GetColor(value, value, value));
+                },
+                onComplete:function()
+                {
+                    element.setVisible(false);
+                }
+            })
+        }
+        function hideChildren (group:Phaser.GameObjects.Group)
+        {
+            group.getChildren().forEach(tweenEnemy);
+        }
+
+        [this.enemyGroupLine1,this.enemyGroupLine2,this.enemyGroupLine3,this.enemyGroupLine4,this.enemyGroupLine5,this.enemyGroupLine6].forEach(hideChildren)
     }
     resume()
     {

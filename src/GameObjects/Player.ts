@@ -143,7 +143,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite
         if(!this.active)
         {
            
-          this.scene.onPlayerEnd();
+         return;
         }
         this.setVelocity(this.getXAxisDirectionVector()*MAX_VELOCITY,this.getYAxisDirectionVector()*MAX_VELOCITY)
     }
@@ -175,12 +175,13 @@ export default class Player extends Phaser.Physics.Matter.Sprite
         this.scene.tweens.addCounter({
             from: 255,
             to: 0,
-            duration: 3000,
+            duration: 500,
             onUpdate:updateTint,
             onComplete:()=>{
                 this.emitter.destroy();
                 this.setActive(false);
                 this.scene.onPlayerEnd();
+                this.setVisible(false);
             }
             
         });

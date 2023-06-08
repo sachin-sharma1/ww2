@@ -84,7 +84,7 @@ export default class ArenaScene extends Phaser.Scene
         this.uiLayer.setDepth(constants.GAME_LOGIC.DEPTHS.UI);
         this.scoreBoard = this.add.bitmapText(0, 0, 'ice','Score : 0',32);
         this.updateScoreBoard();
-        this.uiLayer.add(this.scoreBoard)
+       this.addToUILayer(this.scoreBoard);
      
     }
     setupBackgroundAudio()
@@ -93,6 +93,10 @@ export default class ArenaScene extends Phaser.Scene
     }
     
     public addToGameLayer(obj:Phaser.GameObjects.GameObject)
+    {
+        this.gameObjectsLayer.add(obj);
+    }
+    public addToUILayer(obj:Phaser.GameObjects.GameObject)
     {
         this.gameObjectsLayer.add(obj);
     }
@@ -124,37 +128,10 @@ export default class ArenaScene extends Phaser.Scene
     }
     onPlayerEnd()
     {
-        const message = [
-            'Welcome to the',
-            'Phaser 3 Wipe FX',
-            'Using Text PreFX',
-            'and a Tween'
-        ];
+      
+        const text = this.add.bitmapText(this.scale.width/2-100, this.scale.height/2,"ice", "Game Over", 150);
+        this.enemyManger.stop();
+        this.addToUILayer(text);
 
-        const text = this.add.text(this.scale.width/2, this.scale.height/2, "Game Over", { fontFamily: 'Arial Black', fontSize: 80 });
-        this.addToGameLayer(text);
-
-        const gradient = text.context.createLinearGradient(0, 0, 0, text.height);
-
-        gradient.addColorStop(0, '#f26522');
-        gradient.addColorStop(0.5, '#fff200');
-        gradient.addColorStop(0.5, '#f7941d');
-        gradient.addColorStop(1, '#ed1c24');
-
-        text.setFill(gradient);
-        text.setOrigin(0.5, 0.5);
-        
-
-        const fx = text.preFX?.addReveal();
-
-        this.tweens.add({
-            targets: fx,
-            progress: 1,
-            hold: 500,
-            duration: 3000,
-            repeat: -1,
-
-        });
-        this.scene.stop();
     }
 }
