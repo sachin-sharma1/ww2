@@ -61,6 +61,7 @@ export default class ArenaScene extends Phaser.Scene
     onEnemyDestroy()
     {
         this.score++;
+        this.updateScoreBoard();
       
     }
     updateScoreBoard()

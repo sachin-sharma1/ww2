@@ -67,8 +67,8 @@ export default class LoadingScene extends Phaser.Scene
     create()
     {
         this.logoSprite=this.add.sprite(this.getCenter(),100+250,constants.GAME_OBJECTS.LOGO);
-        this.updateTextLabel=this.add.bitmapText(this.getCenter(),700,"ice","loading").setOrigin(.5)
-        this.loadingTextLabel=this.add.bitmapText(this.getCenter(),725,"ice","please wait..").setOrigin(.5)  
+        this.updateTextLabel=this.add.bitmapText(this.getCenter(),700,"ice","loading",32).setOrigin(.5)
+        this.loadingTextLabel=this.add.bitmapText(this.getCenter(),725,"ice","please wait..",32).setOrigin(.5)  
     }
     update(t:number,dt:number)
     {
