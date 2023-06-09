@@ -129,7 +129,7 @@ export default class ArenaScene extends Phaser.Scene
     onPlayerEnd()
     {
       
-        const text = this.add.bitmapText(this.scale.width/2-100, this.scale.height/2,"ice", "Game Over", 150);
+        const text = this.add.bitmapText(this.scale.width/2-200, this.scale.height/2-100,"ice", "Game Over", 150);
         this.enemyManger.stop();
         this.addToUILayer(text);
 

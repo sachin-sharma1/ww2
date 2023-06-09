@@ -1,6 +1,6 @@
 const constants={
    ENV:{
-    DEBUG:true,
+    DEBUG:false,
    },
     DISPLAY:{
         RESOLUTION:{
