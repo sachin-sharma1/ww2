@@ -1,6 +1,9 @@
 # Phaser 3 + TypeScript + Vite.js Template
 > Make Phaser 3 games with TypeScript and modern frontend tooling.
 
+
+#### NOTE: Please Read This is a project and may not be adhering the latest and preferred conventions. Also for assets kindly check with respective authors.
+
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 This is a TypeScript specific fork of [phaser3-vite-template](https://github.com/ourcade/phaser3-vite-template).
